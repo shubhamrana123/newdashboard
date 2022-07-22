@@ -1,17 +1,50 @@
-import React from 'react'
+import React ,{useContext, useEffect, useState}from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import Dashboard from "../pages/Dashboard";
+// import { data } from "../pages/Login";
 
-function Navbar() {
+import UserContex from "../context/UserContext";
+function Navbar() 
+{ 
+  let usrContx = useContext(UserContex);
+  const [userName,setUserName] = useState('')
+  // const newData = useContext(data);
+  // console.log("contextdata", newData);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
+  let navigate = useNavigate();
+
+
+  const onLogout = ()=>
+  {
+    usrContx.logoutHandler();
+
+  }
+  useEffect(()=>{
+    console.log("effect",usrContx?.userInfo)
+    setUserName(`${usrContx?.userInfo?.fname}  ${usrContx?.userInfo?.lname}`);
+  },[usrContx?.userInfo?.fname])
   return (
     <nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
+      <div class="container-fluid">
         <a class="navbar-brand">Navbar</a>
-        <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                <button class="btn btn-outline-success" type="submit">Search</button>
+        <form class="d-flex" >
+          
+          {usrContx.isUserLoggedIn && <div >
+            <span>{userName.toUpperCase()}</span>&nbsp; &nbsp;
+            <button class="btn btn-outline-danger" type="submit" onClick={onLogout}>
+              Logout
+            </button> </div>}
+            
         </form>
-    </div>
-</nav>
-  )
+        {/* {newData} */}
+      </div>
+    </nav>
+  );
 }
 
-export default Navbar
+export default Navbar;

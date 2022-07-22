@@ -1,36 +1,35 @@
-
-import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Dashboard from './pages/Dashboard';
-import Navbar from './components/Navbar';
-import { useState } from 'react';
-
+import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
+import Navbar from "./components/Navbar";
+import { useState } from "react";
+import { createContext } from "react";
+import UserContextProvider from "./context/userContextProvider";
+// import Login from './pages/Login';
+const datas = createContext(Login);
 function App() {
-  const [userListData, setUserListData] = useState([
-    { id: 1, firstName: "shubham", lastName: "rana", email: "shubham@gmail.com", password: "Miri@123" }
-  ])
-  const addUserData = (data) => {
-    console.log(data);
-    console.log("added", JSON.stringify(data))
-    setUserListData(prevState => (
-      [...prevState, data]
-    ))
-  }
+  
+
   return (
     <>
+      <br />
 
-      <Navbar></Navbar>
-      <br/>
-      <BrowserRouter>
+        <Navbar></Navbar>
+        {/* <UserContextProvider></UserContextProvider> */}
         <Routes>
-          <Route path='/' element={<Login  list = {userListData}/>} />
-          <Route path='signup' element={<Signup list = {userListData} addUser={addUserData}></Signup>} />
-          {/* <Route path='dashboard' element={<Dashboard></Dashboard>} /> */}
-
+          <Route path="/" element={<Login  />} />
+          <Route path="/login" element={<Login  />} />
+          <Route
+            path="signup"
+            element={
+              <Signup  ></Signup>
+            }
+          />
+          <Route path="dashboard" element={<Dashboard></Dashboard>} />
         </Routes>
-      </BrowserRouter>
+
     </>
   );
 }
