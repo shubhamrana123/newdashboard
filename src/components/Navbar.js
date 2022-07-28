@@ -1,14 +1,13 @@
-import React ,{useContext, useEffect, useState}from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 // import { data } from "../pages/Login";
 
 import UserContex from "../context/UserContext";
-function Navbar() 
-{ 
+function Navbar() {
   let usrContx = useContext(UserContex);
-  const [userName,setUserName] = useState('')
+  const [userName, setUserName] = useState('')
   // const newData = useContext(data);
   // console.log("contextdata", newData);
   const {
@@ -19,31 +18,80 @@ function Navbar()
   let navigate = useNavigate();
 
 
-  const onLogout = ()=>
-  {
+  const onLogout = () => {
     usrContx.logoutHandler();
 
   }
-  useEffect(()=>{
-    console.log("effect",usrContx?.userInfo)
+  const addEmployeeList = () => {
+    navigate('/addEmployee')
+  }
+  const onAddEmployee = () =>{
+    navigate('addEmployee')
+  }
+  const showDashboardPage = () =>{
+    navigate('/dashboard')
+  }
+const showEmployeeList = () =>{
+  navigate('/userlist')
+}
+  useEffect(() => {
+    // const res =  axios.post("http://localhost:3001/api/admin/login", data);
+    console.log("effect", usrContx?.userInfo)
+    // if (res.data.result?.ErrorMessage) {
+
+    // }
     setUserName(`${usrContx?.userInfo?.fname}  ${usrContx?.userInfo?.lname}`);
-  },[usrContx?.userInfo?.fname])
+  }, [usrContx?.userInfo?.fname])
   return (
-    <nav class="navbar navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand">Navbar</a>
-        <form class="d-flex" >
+    // <nav class="navbar navbar-light bg-light">
+    //   <div class="container-fluid">
+    //     <a class="navbar-brand">Navbar</a>
+
+    //     <form class="d-flex" style={{display: "inline-block"}}>
+    //       {usrContx.isUserLoggedIn && <div >
+
+    //         {usrContx.isUserLoggedIn &&
+    //           <select className="form-control me-2" onChange={addEmployeeList}>
+    //             <option>{userName.toUpperCase()}</option>
+    //             <option>Add Employee</option>
+    //             <option>Add Managers</option>
+    //           </select>}
+    //         <button class="btn btn-outline-danger " type="submit" onClick={onLogout}>
+    //           Logout
+    //         </button>
+    //         </div>}
+    //       </form>
+    //       </div>
+    // </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand border-remove-btn" >Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active border-remove-btn btn" aria-current="page" onClick={showDashboardPage} >Home</a>
+          </li>
+          <li class="nav-item" >
+            <a class="nav-link btn border-remove-btn"  onClick={onAddEmployee} key={1} >Add Employee</a>
+          </li>
           
-          {usrContx.isUserLoggedIn && <div >
-            <span>{userName.toUpperCase()}</span>&nbsp; &nbsp;
-            <button class="btn btn-outline-danger" type="submit" onClick={onLogout}>
-              Logout
-            </button> </div>}
-            
-        </form>
-        {/* {newData} */}
+          <li class="nav-item dropdown">
+            <a class="nav-link border-remove-btn"  role="button" onClick={showEmployeeList}  >
+              Employee List
+            </a>
+          </li>
+          {/* <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li> */}
+        </ul>
+          <span className="text-light"> <b>{usrContx.isUserLoggedIn && userName.toUpperCase()} </b></span> &nbsp;&nbsp;
+          <button class="btn btn-outline-danger"  onClick={onLogout}>Logout</button>
       </div>
-    </nav>
+    </div>
+  </nav>
   );
 }
 

@@ -12,6 +12,7 @@ function UserContextProvider(props) {
   const onLoginHandler = userInfo => {
     setIsUserLoggedIn(true);
     setUserInfo(userInfo)
+    console.log(userInfo);
     console.log("Usr Ctx", userInfo);
     // const _userInfo = {
     // }

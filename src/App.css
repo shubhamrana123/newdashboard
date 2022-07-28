@@ -5,7 +5,11 @@ text-decoration: underline;
 color:blue;
 border:0px
 }
-/* .App {
+
+.border-remove-btn{
+  border-style: none;
+}
+.App {
   text-align: center;
 }
 
@@ -42,4 +46,14 @@ border:0px
   to {
     transform: rotate(360deg);
   }
-} */
+}
+.flex{
+  display:flex;
+  flex-direction:row;
+  justify-content: space-around;
+}
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+
+  }

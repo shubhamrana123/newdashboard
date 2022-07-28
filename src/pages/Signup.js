@@ -4,7 +4,9 @@ import { useForm } from "react-hook-form";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { Navigate, useNavigate } from "react-router-dom";
-function Signup(props) {
+import Input from "../components/layout/form-fields/Input";
+import SelectBox from "../components/layout/form-fields/SelectBox";
+function Signup() {
   const axios = require("axios").default;
   const {
     register,
@@ -55,51 +57,16 @@ function Signup(props) {
         <div className="col-md-4"></div>
         <div className="col-md-4">
           <form onSubmit={handleSubmit(onSignup)}>
-            <label>FirstName</label>
-            <input
-              className="form-control"
-              {...register("fname", { required: true })}
-            ></input>
-            {errors.firstname && <p>Please Check Your FirstName</p>}
-            <label>LastName</label>
-            <input
-              className="form-control"
-              {...register("lname", { required: true })}
-            ></input>
-            {errors.lastname && <p>Please Check Your LastName</p>}
-            <label>Email</label>
-            <input
-              className="form-control"
-              {...register("email", { required: true })}
-            ></input>
-            {errors.email && <p>Please Check Your email</p>}
-            <label>Password</label>
-            <input
-              className="form-control"
-              {...register("password", { required: true })}
-            ></input>
-            {errors.password && <p>Please Check Your Password</p>}
+
+            <Input register={register} label="FirstName" controller="fname" type="text" errors={errors} required={true} maxlength={10} minlength={1} />
+            <Input register={register} label="LastName" controller="lname" type="text" errors={errors} required={true} maxlength={10} minlength={1} />
+            <Input register={register} label="Email" controller="email" type="email" errors={errors} required={true} maxlength={15} minlength={1} />
+            <Input register={register} label="Password" controller="password" type="password" errors={errors} required={true} maxlength={15} minlength={1} />
             <br />
-            <select
-              className="form-control"
-              {...register("country", { required: true })}
-            >
-              <option>Please choose Country</option>
-              {countryList.map(item => (
-                <option value={item.name}>{item.name}</option>
-              ))}
-            </select>{" "}
+            <SelectBox register={register} controller="country" errors={errors} required={true} optionFirstValue="Please Choose Country" country={countryList} />
             <br />
-            <label>Phone number</label> <br />
-            <input
-              className="form-control"
-              {...register("phone", { required: true })}
-            ></input>
+            <Input register={register} label="Phone" controller="phone" type="text" errors={errors} required={true} maxlength={10} minlength={1} />
             <br />
-            {/* <PhoneInput
-              placeholder="Enter phone number"
-              value={value}
-              onChange={setValue} /> <br/> */}
             <button className="form-control btn btn-success">Signup</button>
           </form>
         </div>
@@ -107,5 +74,6 @@ function Signup(props) {
     </>
   );
 }
+
 
 export default Signup;
